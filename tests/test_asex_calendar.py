@@ -9,7 +9,8 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestASEXCalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield ASEXExchangeCalendar
 
     @pytest.fixture

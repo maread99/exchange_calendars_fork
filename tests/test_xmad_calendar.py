@@ -7,7 +7,8 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestXMADCalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XMADExchangeCalendar
 
     @pytest.fixture

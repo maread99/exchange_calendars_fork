@@ -9,11 +9,13 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestWeekdayCalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class", params=["left", "right"])
-    def all_calendars_with_answers(self, request, calendars, answers):
+    @staticmethod
+    def all_calendars_with_answers(request, calendars, answers):
         yield (calendars[request.param], answers[request.param])
 
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield WeekdayCalendar
 
     @pytest.fixture

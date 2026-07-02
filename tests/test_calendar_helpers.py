@@ -439,15 +439,17 @@ class TestTradingIndex:
     # Fixtures
 
     @pytest.fixture(scope="class")
-    def answers(self) -> abc.Iterator[dict[str, Answers]]:
+    @classmethod
+    def answers(cls) -> abc.Iterator[dict[str, Answers]]:
         """Dict of answers for tested calendars, key as name, value as Answers."""
         d = {}
-        for name in self.CALENDAR_NAMES:
+        for name in cls.CALENDAR_NAMES:
             d[name] = Answers(name, side="left")
         return d
 
     @pytest.fixture(scope="class")
-    def calendars(self, answers) -> abc.Iterator[dict[str, ExchangeCalendar]]:
+    @staticmethod
+    def calendars(answers) -> abc.Iterator[dict[str, ExchangeCalendar]]:
         """Dict of tested calendars, key as name, value as calendar."""
         d = {}
         for name, ans in answers.items():
@@ -456,8 +458,9 @@ class TestTradingIndex:
         return d
 
     @pytest.fixture(scope="class", params=CALENDAR_NAMES)
+    @staticmethod
     def calendars_with_answers(
-        self, request, calendars, answers
+        request, calendars, answers
     ) -> abc.Iterator[tuple[ExchangeCalendar, Answers]]:
         """Parameterized fixture."""
         yield (calendars[request.param], answers[request.param])
@@ -1047,8 +1050,9 @@ class TestTradingIndex:
         yield request.param
 
     @pytest.fixture(scope="class")
+    @staticmethod
     def cal_start_end(
-        self, calendars
+        calendars,
     ) -> abc.Iterator[tuple[ExchangeCalendar], pd.Timestamp, pd.Timestamp]:
         """(calendar, start, end) parameters for specific tests."""
         yield (
@@ -1206,7 +1210,8 @@ class TestTradingIndex:
         assert_index_equal(rtrn, index_true)
 
     @pytest.fixture(scope="class")
-    def cal_with_ans_align(self) -> abc.Iterator[tuple[ExchangeCalendar, Answers]]:
+    @staticmethod
+    def cal_with_ans_align() -> abc.Iterator[tuple[ExchangeCalendar, Answers]]:
         """Calendar with open and break_end times to test align options."""
         cal_name = "TEST"
 
@@ -1223,8 +1228,9 @@ class TestTradingIndex:
         yield cal, ans
 
     @pytest.fixture(scope="class")
+    @staticmethod
     def dates_align(
-        self, cal_with_ans_align
+        cal_with_ans_align,
     ) -> abc.Iterator[tuple[pd.Timestamp, pd.Timestamp]]:
         """Sessions over which to test effect of align parameters.
 

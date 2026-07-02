@@ -23,7 +23,8 @@ from .test_utils import T
 
 class TestXTKSCalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XTKSExchangeCalendar
 
     @pytest.fixture

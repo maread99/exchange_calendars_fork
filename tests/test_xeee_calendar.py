@@ -6,7 +6,8 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestXEEECalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XEEEExchangeCalendar
 
     @pytest.fixture

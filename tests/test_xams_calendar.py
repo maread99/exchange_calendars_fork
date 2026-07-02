@@ -6,7 +6,8 @@ from .test_exchange_calendar import EuronextCalendarTestBase
 
 class TestXAMSCalendar(EuronextCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XAMSExchangeCalendar
 
     @pytest.fixture

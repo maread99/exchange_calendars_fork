@@ -7,7 +7,8 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestXTAECalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XTAEExchangeCalendar
 
     @pytest.fixture
@@ -127,7 +128,8 @@ class TestXTAECalendar(ExchangeCalendarTestBase):
 
 class TestXTAECalendarEarlyCloseSundaysBefore2026(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield XTAEExchangeCalendar
 
     @pytest.fixture

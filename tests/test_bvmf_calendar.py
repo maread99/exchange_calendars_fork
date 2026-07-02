@@ -6,7 +6,8 @@ from .test_exchange_calendar import ExchangeCalendarTestBase
 
 class TestBVMFCalendar(ExchangeCalendarTestBase):
     @pytest.fixture(scope="class")
-    def calendar_cls(self):
+    @staticmethod
+    def calendar_cls():
         yield BVMFExchangeCalendar
 
     @pytest.fixture
@@ -59,6 +60,7 @@ class TestBVMFCalendar(ExchangeCalendarTestBase):
         ]
 
     @pytest.fixture(scope="class")
-    def late_opens_sample(self):
+    @staticmethod
+    def late_opens_sample():
         # Ash Wednesday, 46 days before Easter Sunday
         yield ["2016-02-10", "2017-03-01", "2018-02-14", "2022-03-02"]
