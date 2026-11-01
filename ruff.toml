@@ -62,6 +62,7 @@ ignore = [
     "PLR2004", # magic-value-comparison. TODO: Review. Maybe tighten up with fixes and inline noqa.
     "ERA001",  # commented-out-code. TODO: Fix.
     "PD011",  # pandas-use-of-dot-values. TODO: Fix.
+    "ICN001",  # import-conventions. Conflicts with pervasive use of `dt` as a parameter name.
     # Actively ignore all these...
     "COM812",  # missing-trailing-comma.  As recommended by ruff as conflicts with formatter.
     "TD002",  # missing-todo-author
