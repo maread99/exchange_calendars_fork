@@ -1411,9 +1411,8 @@ class Answers:
         offset_minutes = minutes.dt.tz_convert(None) - sessions + target_sessions
         # only include offset minute if verified as break minute of target
         # (it wont be if the break has shifted by more than the break duration)
-        mask = (
-            offset_minutes.to_numpy() > self.last_am_minutes[target_sessions].to_numpy()
-        )
+        last_am_minutes = self.last_am_minutes[target_sessions].dt.tz_convert(None)
+        mask = offset_minutes.to_numpy() > last_am_minutes.to_numpy()
         lst.extend(
             list(zip(minutes[mask], sessions[mask], target_sessions[mask], strict=True))
         )
@@ -1424,10 +1423,8 @@ class Answers:
         minutes = self.last_am_minutes[sessions]
         offset_minutes = minutes.dt.tz_convert(None) - sessions + target_sessions
         # only include offset minute if verified as break minute of target
-        mask = (
-            offset_minutes.to_numpy()
-            < self.first_pm_minutes[target_sessions].to_numpy()
-        )
+        first_pm_minutes = self.first_pm_minutes[target_sessions].dt.tz_convert(None)
+        mask = offset_minutes.to_numpy() < first_pm_minutes.to_numpy()
         lst.extend(
             list(zip(minutes[mask], sessions[mask], target_sessions[mask], strict=True))
         )
@@ -1459,9 +1456,8 @@ class Answers:
         offset_minutes = minutes.dt.tz_convert(None) - sessions + target_sessions
         # only include offset minute if verified as break minute of target
         # (it wont be if the break has shifted by more than the break duration)
-        mask = (
-            offset_minutes.to_numpy() > self.last_am_minutes[target_sessions].to_numpy()
-        )
+        last_am_minutes = self.last_am_minutes[target_sessions].dt.tz_convert(None)
+        mask = offset_minutes.to_numpy() > last_am_minutes.to_numpy()
         lst.extend(
             list(zip(minutes[mask], sessions[mask], target_sessions[mask], strict=True))
         )
@@ -1472,10 +1468,8 @@ class Answers:
         minutes = self.last_am_minutes[sessions]
         offset_minutes = minutes.dt.tz_convert(None) - sessions + target_sessions
         # only include offset minute if verified as break minute of target
-        mask = (
-            offset_minutes.to_numpy()
-            < self.first_pm_minutes[target_sessions].to_numpy()
-        )
+        first_pm_minutes = self.first_pm_minutes[target_sessions].dt.tz_convert(None)
+        mask = offset_minutes.to_numpy() < first_pm_minutes.to_numpy()
         lst.extend(
             list(zip(minutes[mask], sessions[mask], target_sessions[mask], strict=True))
         )
