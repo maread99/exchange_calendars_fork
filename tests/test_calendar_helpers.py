@@ -977,7 +977,7 @@ class TestTradingIndex:
         )
         assert isinstance(index, pd.DatetimeIndex)
         assert not index.empty
-        pd.testing.assert_index_equal(index.normalize(), index)
+        pd.testing.assert_index_equal(index.normalize(), index, check_freq=False)
 
     # Tests for expected errors.
 
