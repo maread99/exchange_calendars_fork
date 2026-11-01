@@ -21,6 +21,7 @@ from exchange_calendars import calendar_utils, errors
 from exchange_calendars.calendar_helpers import UTC
 from exchange_calendars.calendar_utils import XTAEExchangeCalendar
 
+from .conftest import assert_index_equal as assert_index_equal_compat
 from .test_exchange_calendar import Answers
 
 # TODO: tests for next_divider_idx, previous_divider_idx, compute_minutes (#15)
@@ -977,7 +978,7 @@ class TestTradingIndex:
         )
         assert isinstance(index, pd.DatetimeIndex)
         assert not index.empty
-        pd.testing.assert_index_equal(index.normalize(), index, check_freq=False)
+        assert_index_equal_compat(index.normalize(), index, check_freq=False)
 
     # Tests for expected errors.
 

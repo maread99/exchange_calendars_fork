@@ -165,7 +165,11 @@ class CompositeCustomBusinessDay(CustomBusinessDay):
                 bday, interval = self._custom_business_day_for(
                     other, remaining, is_edge=True, with_interval=True
                 )
-                result = bday._add_datetime(other)  # noqa: SLF001
+                if hasattr(bday, "_add_datetime"):
+                    result = bday._add_datetime(other)  # noqa: SLF001
+                else:
+                    # pandas < 3.1 dispatches `+` through `_apply` instead.
+                    result = bday._apply(other)  # noqa: SLF001
             return result
         return super().apply(other)
 
