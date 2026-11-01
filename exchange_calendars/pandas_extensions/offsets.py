@@ -172,6 +172,17 @@ class CompositeCustomBusinessDay(CustomBusinessDay):
     # backwards compat
     apply = _apply
 
+    def _add_datetime(self, other):
+        return self._apply(other)
+
+    @property
+    def _supports_daily_offset_mask(self):
+        # The base class's vectorized daily-offset mask only accounts for
+        # the base weekmask/holidays/calendar, not the per-interval
+        # weekmask overrides applied by `_apply`/`is_on_offset` below, so
+        # fall back to the slower but correct iterative range generation.
+        return False
+
     def is_on_offset(self, dt):
         if self.normalize and not _is_normalized(dt):
             return False
@@ -345,3 +356,6 @@ class OrthodoxEaster(SingleConstructorOffset):
         return date(dt.year, dt.month, dt.day) == easter(
             dt.year, method=EASTER_ORTHODOX
         )
+
+    def _add_datetime(self, other: datetime) -> datetime:
+        return self._apply(other)

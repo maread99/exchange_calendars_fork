@@ -3,8 +3,9 @@ from datetime import date, datetime
 import pandas as pd
 from pandas._libs.tslibs.conversion import localize_pydatetime
 from pandas.tseries.holiday import Day, Holiday
-from pandas.tseries.offsets import Easter
 from pyluach import dates, hebrewcal
+
+from .pandas_extensions.offsets import SingleConstructorOffset
 
 try:
     from pandas._libs.tslibs.offsets import apply_wraps
@@ -221,10 +222,14 @@ def _is_normalized(dt):
     return True
 
 
-class _HolidayOffset(Easter):
+class _HolidayOffset(SingleConstructorOffset):
     """
     Auxiliary class for DateOffset instances for the different holidays.
     """
+
+    def __setstate__(self, state):
+        self.n = state.pop("n")
+        self.normalize = state.pop("normalize")
 
     @property
     def holiday(self):
@@ -266,6 +271,9 @@ class _HolidayOffset(Easter):
         if self.normalize and not _is_normalized(dt):
             return False
         return date(dt.year, dt.month, dt.day) == self.holiday(dt.year).to_pydate()
+
+    def _add_datetime(self, other):
+        return self._apply(other)
 
 
 # DateOffset subclasses for holidays observed by TASE.
