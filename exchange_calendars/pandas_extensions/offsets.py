@@ -165,7 +165,7 @@ class CompositeCustomBusinessDay(CustomBusinessDay):
                 bday, interval = self._custom_business_day_for(
                     other, remaining, is_edge=True, with_interval=True
                 )
-                result = bday._apply(other)  # noqa: SLF001
+                result = bday._add_datetime(other)  # noqa: SLF001
             return result
         return super().apply(other)
 
