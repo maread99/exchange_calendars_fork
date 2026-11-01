@@ -485,7 +485,7 @@ class _TradingIndex:
         def align_opens(opens: pd.Series, align: pd.Timedelta) -> np.ndarray:
             """Return opens as nanos shifted for alignment."""
             opens = opens.dt.ceil(align)
-            return opens.values.astype(np.int64)
+            return opens.to_numpy(dtype=np.int64)
 
         if align != pd.Timedelta(1, "min"):
             self.opens = align_opens(calendar.opens[slce], align)

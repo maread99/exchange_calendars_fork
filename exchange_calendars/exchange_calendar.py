@@ -402,10 +402,10 @@ class ExchangeCalendar(ABC):
             ),
         )
 
-        self.opens_nanos = self.schedule.open.values.astype(np.int64)
-        self.break_starts_nanos = self.schedule.break_start.values.astype(np.int64)
-        self.break_ends_nanos = self.schedule.break_end.values.astype(np.int64)
-        self.closes_nanos = self.schedule.close.values.astype(np.int64)
+        self.opens_nanos = self.schedule.open.to_numpy(dtype=np.int64)
+        self.break_starts_nanos = self.schedule.break_start.to_numpy(dtype=np.int64)
+        self.break_ends_nanos = self.schedule.break_end.to_numpy(dtype=np.int64)
+        self.closes_nanos = self.schedule.close.to_numpy(dtype=np.int64)
 
         _check_breaks_match(self.break_starts_nanos, self.break_ends_nanos)
 
@@ -799,7 +799,7 @@ class ExchangeCalendar(ABC):
     @functools.cached_property
     def sessions_nanos(self) -> np.ndarray:
         """All calendar sessions as nano seconds."""
-        return self.sessions.values.astype("int64")
+        return self.sessions.to_numpy(dtype="int64")
 
     @property
     def opens(self) -> pd.Series:
@@ -939,7 +939,7 @@ class ExchangeCalendar(ABC):
     @functools.cached_property
     def minutes_nanos(self) -> np.ndarray:
         """All trading minutes as nanoseconds."""
-        return self.minutes.values.astype(np.int64)
+        return self.minutes.to_numpy(dtype=np.int64)
 
     # Calendar properties.
 
@@ -2153,7 +2153,7 @@ class ExchangeCalendar(ABC):
             raise ValueError("`index` must be ordered.")
         # Find the indices of the previous first session minute and the next
         # last session minute for each minute.
-        index_nanos = minutes.values.astype(np.int64)
+        index_nanos = minutes.to_numpy(dtype=np.int64)
         first_min_nanos = self.first_minutes_nanos
         last_min_nanos = self.last_minutes_nanos
         prev_first_mins_idxs = (
